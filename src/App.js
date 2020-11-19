@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { switchOn } from './actions'
 
 let App = ({ monitor, switchOn }) => {
-  console.log(monitor)
+ 
   return (
     <div className="App">
       <p>Temperature : {monitor.temperature}</p>

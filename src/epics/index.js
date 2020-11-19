@@ -65,9 +65,6 @@ export function monitorOn() {
   return { type: 'SWITCH_ON' };
 }
 
-export function monitorOff() {
-  return { type: 'SWITCH_OFF' };
-}
 
 export const Action = (type, payload) => ({
   type,
@@ -91,6 +88,7 @@ export const displayEpic = action$ => {
     },
   };
   return action$.ofType('SWITCH_ON').switchMap(() => {
+
     const temperatureEvents$ = Observable.fromEvent(temperature, 'data')
       .distinctUntilChanged()
       .map(value => ({
@@ -111,6 +109,7 @@ export const displayEpic = action$ => {
         type: 'humidity',
         value,
       }));
+
     let canGo = true;
     const allEvents$ = Observable.merge(
       temperatureEvents$,
@@ -126,6 +125,7 @@ export const displayEpic = action$ => {
               ? 'N/A'
               : display[key].value;
         });
+
         display[data.type] = { value: data.value, time: now.getTime() };
 
         Object.keys(display).forEach(key => {
@@ -133,6 +133,7 @@ export const displayEpic = action$ => {
             canGo = !!display[key].value;
           }
         });
+
         return monitor;
       })
       .skipWhile(() => canGo)

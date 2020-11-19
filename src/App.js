@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { switchOn } from './actions'
 
-function App() {
+let App = ({ monitor, switchOn }) => {
+  console.log(monitor)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>Temperature : {monitor.temperature}</p>
+      <p>Pressure : {monitor.airPressure}</p>
+      <p>Humidity : {monitor.humidity}</p>
+      <button onClick={switchOn}>Switch On</button>
     </div>
   );
 }
+
+App = connect(
+  ({ monitor }) => ({ monitor }), { switchOn }
+)(App);
 
 export default App;
